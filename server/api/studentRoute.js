@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const { Campus, Student } = require('../db/models');
 const db = require('../db')
-const { Student, Campus } = require('../db/models');
+
+const campusRoute = require('./campusRoute');
+const studentRoute = require('./studentRoute');
 
 
 
@@ -10,5 +13,5 @@ const { Student, Campus } = require('../db/models');
 
 
 
-module.export = router;
+module.exports = router;
 

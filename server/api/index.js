@@ -10,10 +10,13 @@ const studentRoute = require('./studentRoute');
 	// I know this because we automatically send index.html for all requests that don't make sense in our backend.
 	// Ideally you would have something to handle this, so if you have time try that out!
 
+
+	//------Campus Routes-------//
+
 	// //GET all campuses
 	router.get('/campuses', (req, res, next) => {
 		Campus.findAll({include: Student})
-		.then(campuses => res.send(campuses))
+		.then(campuses => res.json(campuses))
 		.catch(next);
 	});
 
@@ -22,6 +25,73 @@ const studentRoute = require('./studentRoute');
 		Campus.findById(req.params.campusId)
 		.then(campus => res.json(campus))
 		.catch(next);
+	});
+
+	//PUT (update) a campus
+	router.put('/campuses/:campusId', (req, res, next) => {
+		return Campus.update(req.body, {
+			where: { id: req.params.campusId },
+		})
+		.then(([affectedCount, affectedRows]) => res.json(affectedRows))
+		.catch(next);
+	});
+
+	//DELETE a campus
+	router.delete('/campuses/:campusId', (req, res, next) => {
+		return Campus.destroy({
+			where: { id: req.params.campusId},
+		})
+		.then(affectedRows => res.sendStatus(204).json(affectedRows))
+		.catch(next)
+	});
+
+//POST a new campus
+router.post('/campuses', (req, res, next) => {
+  return Campus.create(req.body)
+    .then(campus => res.json(campus))
+    .catch(next);
+});
+
+
+	//------Student Routes-------//
+
+//GET all students
+	router.get('/students', (req, res, next) => {
+		Student.findAll()
+		.then(student => res.json(student))
+		.catch(next);
+	});
+
+	//GET a student by id
+	router.get('/students/:studentId', (req, res, next) => {
+		Student.findById(req.params.studentId)
+		.then(student => res.json(student))
+		.catch(next);
+	});
+
+// //POST a new student
+router.post('/students', (req, res, next) => {
+  return Student.create(req.body)
+    .then(student => res.json(student))
+    .catch(next);
+});
+
+	//PUT (update) a student
+	router.put('/students/:studentId', (req, res, next) => {
+		return Student.update(req.body, {
+			where: { id: req.params.studentId },
+		})
+		.then(([affectedCount, affectedRows]) => res.json(affectedRows))
+		.catch(next);
+	});
+
+	//DELETE a student
+	router.delete('/students/:studentId', (req, res, next) => {
+		return Student.destroy({
+			where: { id: req.params.studentId},
+		})
+		.then(affectedRows => res.sendStatus(204).json(affectedRows))
+		.catch(next)
 	});
 
 
