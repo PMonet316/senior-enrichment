@@ -22,7 +22,7 @@ const studentRoute = require('./studentRoute');
 
 	//GET a campus by id
 	router.get('/campuses/:campusId', (req, res, next) => {
-		Campus.findById(req.params.campusId)
+		Campus.findById(req.params.campusId, {include: Student})
 		.then(campus => res.json(campus))
 		.catch(next);
 	});
@@ -71,9 +71,11 @@ router.post('/campuses', (req, res, next) => {
 
 // //POST a new student
 router.post('/students', (req, res, next) => {
-  return Student.create(req.body)
-    .then(student => res.json(student))
-    .catch(next);
+   const student = Student.build(req.body);
+  student.setCampus(req.body.campusId)
+  return student.save()
+  .then(student => res.status(201).json(student))
+  .catch(next);
 });
 
 	//PUT (update) a student

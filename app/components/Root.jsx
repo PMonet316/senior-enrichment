@@ -4,7 +4,8 @@ import Header from './Header';
 import AllCampuses from './AllCampuses';
 import AllStudents from './AllStudents';
 import SingleCampus from './SingleCampus';
-import axios from 'axios'
+import SingleStudent from './SingleStudent'
+
 
 
 
@@ -17,36 +18,7 @@ import axios from 'axios'
 
 
 export default class Main extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      campuses: [],
-      selectedCampus: [],
-      students: []
-    }
 
-    this.selectCampus = this.selectCampus.bind(this)
-  }
-
-  componentWillMount(){
-    axios.get("api/campuses")
-    .then(res => res.data)
-    .then(campuses => this.setState({ campuses }));
-    }
-
-  componentDidMount(){
-      axios.get("api/students")
-      .then(res => res.data)
-      .then(students => this.setState({ students }));
-      }
-
-selectCampus(campusId) {
-  console.log("IS THIS CLICKED?")
-  axios.get(`/api/campuses/${campusId}`)
-  .then(res => res.data)
-  .then(campus => this.setState({ selectedCampus: campus }))
-
-}
 
 
   render() {
@@ -58,9 +30,15 @@ selectCampus(campusId) {
             <Header />
           </div>
           <div>
-            <AllCampuses selectCampus={this.selectCampus} {...this.state} />
-
-            <AllStudents {...this.state}/>
+            <Route exact path="/" component={AllCampuses} />
+            <Route exact path="/campuses" component={AllCampuses} />
+            <Route path="/campuses/:campusId" component={SingleCampus} />
+            <Route exact path="/students" component={AllStudents} />
+            <Route path="/students/:studentId" component={SingleStudent} />
+            {/*<AllCampuses selectCampus={this.selectCampus} {...this.state} />
+            <SingleCampus campus={this.state.selectedCampus} />
+            <AllStudents selectStudent={this.selectStudent} {...this.state}/>
+    <SingleStudent student={this.state.selectedStudent} />*/}
           </div>
         </div>
       </Router>

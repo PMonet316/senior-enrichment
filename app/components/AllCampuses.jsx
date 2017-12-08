@@ -1,13 +1,30 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-import SingleCampus from './SingleCampus'
 
 
 export default class AllCampuses extends Component {
+  constructor() {
+    super();
+    this.state = {
+      campuses: [],
+      selectedCampus: []
+    }
+  }
+
+
+  componentDidMount(){
+    axios.get("api/campuses")
+    .then(res => res.data)
+    .then(campuses => this.setState({ campuses }));
+    }
+
 
 
   render() {
+
+    const campuses = this.state.campuses;
+
     return (
       <div>
         <div>
@@ -16,22 +33,21 @@ export default class AllCampuses extends Component {
         <div className="row">
           <div className="col s12 m7">
             {
-              this.props.campuses.map(campus => {
+              campuses.map(campus => {
                 return (
                   <div key={campus.id} className="card">
-                    <a onClick={() => this.props.selectCampus(campus.id)}>
+                    <Link to={`/campuses/${campus.id}`}>
                     <div className="card-image">
                     <img src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/37912591295_7c30a77efd_o.jpg" />
                     </div>
                       <div>
                         <span className="card-title">{campus.name}</span>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 )
               })
             }
-            <SingleCampus campus={this.props.selectedCampus} />
           </div>
         </div>
       </div>
