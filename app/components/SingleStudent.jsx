@@ -1,43 +1,61 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { fetchSelectedStudent } from '../reducers/selectedStudent'
+import { connect } from 'react-redux'
 
 
 
-export default class SingleStudent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedStudent: {}
-    }
-  }
-
-
+class SingleStudent extends Component {
 
 
   componentDidMount(){
-      const studentId = this.props.match.params.studentId
-      axios.get(`/api/students/${studentId}`)
-      .then(res => res.data)
-      .then(student => this.setState({ selectedStudent: student}))
+    this.props.setStudent(this.props.match.params.studentId);
     }
 
 
-  render() {
-    const student = this.state.selectedStudent;
-    {console.log("STATE: ", this.state)}
-    return (
 
+
+
+  render() {
+    const student = this.props.selectedStudent;
+    console.log("PROPS: ", this.props.selectedCampus)
+    return (
       <div>
+
         <h2>{student.name}</h2>
         <p>Email: {student.email}</p>
         <p>GPA: {student.gpa}</p>
-
-
-      <Link to={`/students/${student.id}/edit`}>
-      <button className="btn waves-effect waves-light">Edit Student</button>
-    </Link>
+        <p>Campus ID: {student.campusId}</p>
+        <ul>
+          <Link to={`/campuses/${student.campusId}`}>
+            <button className="btn waves-effect waves-light">Navigate to Campus: {student.campusId}</button>
+          </Link>
+        </ul>
+        <ul>
+          <Link to={`/students/${student.id}/edit`}>
+            <button className="btn waves-effect waves-light">Edit Student</button>
+          </Link>
+        </ul>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    selectedStudent: state.selectedStudent
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    setStudent: (studentId) => {
+       dispatch(fetchSelectedStudent (studentId));
+    }
+  }
+}
+
+const SingleStudentContainer = connect(mapStateToProps, mapDispatchToProps)(SingleStudent)
+
+export default SingleStudentContainer;

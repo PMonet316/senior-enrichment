@@ -26,23 +26,25 @@ class AllStudents extends Component {
           <Link to={`/addNewStudent`}>
             <button className="btn waves-effect waves-light">Add New Student</button>
           </Link>
-          <div className="col s12 m7">
+          <div className="collection">
           { students.length &&
             students.map(student => {
               return (
-                <div key={student.id} >
+                <div key={student.id} className="collection-item">
                   <div  className="card">
                     <Link to={`/students/${student.id}`}>
                     <div className="card-image">
                     </div>
                       <div>
-                        <span className="card-title">{student.name}</span>
+                        <h2><span className="card-stacked">{student.name}</span></h2>
                       </div>
                     </Link>
+                    <div className="btn waves-effect waves-light chip" onClick={() => this.props.deleteStudent(student.id)}>
+                    Delete Student
                   </div>
-                  <button className="btn waves-effect waves-light" onClick={() => this.props.deleteStudent(student.id)}>
-                  Delete Student
-                </button>
+
+                  </div>
+
               </div>
               )
             })

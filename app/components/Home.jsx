@@ -27,29 +27,29 @@ class Home extends Component {
         </div>
         <div className="row">
 
-            {
-              campuses.map(campus => {
-                return (
-                  <div key={campus.id} className="col s12 m7">
-                  <div  className="card">
-                    <Link to={`/campuses/${campus.id}`}>
-                    <div className="card-image">
-                    <img src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/37912591295_7c30a77efd_o.jpg" />
-                    </div>
-                      <div>
-                        <span className="card-title">{campus.name}</span>
-                      </div>
-                    </Link>
-                    <div>
-                      <button className="btn waves-effect waves-light" onClick={() => this.props.removeCampus(campus.id)}>
-                      Delete Campus
-                    </button>
+        {
+          campuses.map(campus => {
+            return (
+              <div key={campus.id} className="col s12 m7">
+              <div  className="card horizontal">
+                <Link to={`/campuses/${campus.id}`}>
+                <div className="card-image">
+                <img src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/37912591295_7c30a77efd_o.jpg" />
+                </div>
+                  <div>
+                    <h2><span className="card-stacked">{campus.name}</span></h2>
                   </div>
-                  </div>
-                  </div>
-                )
-              })
-            }
+                </Link>
+                <div>
+                <div className="btn waves-effect waves-light chip" onClick={() => this.props.removeCampus(campus.id)}>
+                Delete Campus
+              </div>
+              </div>
+              </div>
+              </div>
+            )
+          })
+        }
 
         </div>
       </div>

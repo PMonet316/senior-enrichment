@@ -46,7 +46,7 @@ export default class Main extends React.Component {
             <Route exact path="/students/:studentId/edit" component={EditStudent} />
             <Route exact path="/campuses/:campusId/edit" component={EditCampus} />
             <Route exact path="/Home" component={Home} />
-            <Route exact path="*" component={Home} />
+            <Redirect exact path="*" to='/Home' />
           </Switch>
           </div>
         </div>

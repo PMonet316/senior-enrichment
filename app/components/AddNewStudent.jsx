@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { createNewStudent } from '../reducers/students';
 import { fetchCampuses } from '../reducers/campuses';
+import {  Redirect } from 'react-router-dom';
+
 
 
 class AddNewStudent extends Component{
@@ -56,6 +58,7 @@ class AddNewStudent extends Component{
   handleSubmit(e){
     e.preventDefault();
     this.props.createStudent(this.state.firstName, this.state.lastName, this.state.email, this.state.gpa);
+    <Redirect from='/AddNewStudent' to="/students" />
   }
 
   render(){

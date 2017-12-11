@@ -19,7 +19,9 @@ class SingleCampus extends Component {
   render() {
     const campus = this.props.selectedCampus;
     return (
-      <div>
+      <div className="card">
+        <div className="card-image waves-effect waves-block waves-light">
+        </div>
         <h2>{campus.name}</h2>
         <p>Campus ID:  {campus.id}</p>
         <p>{campus.description}</p>
