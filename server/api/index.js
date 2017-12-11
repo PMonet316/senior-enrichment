@@ -71,19 +71,27 @@ router.post('/campuses', (req, res, next) => {
 
 // //POST a new student
 router.post('/students', (req, res, next) => {
-   const student = Student.build(req.body);
-  student.setCampus(req.body.campusId)
+  const student = Student.build({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    gpa: req.body.gpa,
+  });
+  student.setCampus(req.body.campusId);
   return student.save()
-  .then(student => res.status(201).json(student))
+  .then(updatedStudent => res.json(updatedStudent))
   .catch(next);
 });
 
 	//PUT (update) a student
 	router.put('/students/:studentId', (req, res, next) => {
+		console.log("req.body from put route", req.body);
 		return Student.update(req.body, {
 			where: { id: req.params.studentId },
+			returning: true,
+			plain: true
 		})
-		.then(([affectedCount, affectedRows]) => res.json(affectedRows))
+		.then(([numRows, affectedRow]) => res.json(affectedRow))
 		.catch(next);
 	});
 

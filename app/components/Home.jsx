@@ -5,7 +5,7 @@ import { fetchCampuses, deleteCampusThunk } from '../reducers/campuses'
 import { connect } from 'react-redux'
 
 
-class AllCampuses extends Component {
+class Home extends Component {
 
 
     componentDidMount () {
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const CampusesContainer = connect(mapStateToProps, mapDispatchToProps)(AllCampuses)
+const CampusesContainer = connect(mapStateToProps, mapDispatchToProps)(Home)
 
 export default CampusesContainer;
 

@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, NavLink, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, NavLink, Redirect, Link } from 'react-router-dom';
 import Header from './Header';
 import AllCampuses from './AllCampuses';
 import AllStudents from './AllStudents';
 import SingleCampus from './SingleCampus';
-import SingleStudent from './SingleStudent'
+import SingleStudent from './SingleStudent';
+import AddNewCampus from './AddNewCampus';
+import AddNewStudent from './AddNewStudent';
+import EditStudent from './EditStudent';
+import EditCampus from './EditCampus';
+import Home from './Home'
 
 
 
@@ -30,15 +35,19 @@ export default class Main extends React.Component {
             <Header />
           </div>
           <div>
-            <Route exact path="/" component={AllCampuses} />
+          <Switch>
+            <Route exact path="/" component={Home} />
             <Route exact path="/campuses" component={AllCampuses} />
-            <Route path="/campuses/:campusId" component={SingleCampus} />
+            <Route exact path="/campuses/:campusId" component={SingleCampus} />
             <Route exact path="/students" component={AllStudents} />
-            <Route path="/students/:studentId" component={SingleStudent} />
-            {/*<AllCampuses selectCampus={this.selectCampus} {...this.state} />
-            <SingleCampus campus={this.state.selectedCampus} />
-            <AllStudents selectStudent={this.selectStudent} {...this.state}/>
-    <SingleStudent student={this.state.selectedStudent} />*/}
+            <Route exact path="/students/:studentId" component={SingleStudent} />
+            <Route exact path="/AddNewCampus" component={AddNewCampus} />
+            <Route exact path="/AddNewStudent" component={AddNewStudent} />
+            <Route exact path="/students/:studentId/edit" component={EditStudent} />
+            <Route exact path="/campuses/:campusId/edit" component={EditCampus} />
+            <Route exact path="/Home" component={Home} />
+            <Route exact path="*" component={Home} />
+          </Switch>
           </div>
         </div>
       </Router>
@@ -47,7 +56,3 @@ export default class Main extends React.Component {
 }
 
 
-{/*<Switch>
-<Route exact path="/students" component={AllStudents} />
-<Route exact path="/campuses" component={AllCampuses} />
-</Switch>*/}
